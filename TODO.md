@@ -1,4 +1,7 @@
 # TODO
 - [x] Add baseline test framework
-- [ ] Integrate PDF parsing scripts
+- [x] Integrate PDF parsing scripts
+- [x] Add OCR support for scanned PDFs
+- [x] Add tests for PDF conversion module
 - [x] Create README and doc folder with TODO placeholder
+- [ ] Investigate better extraction for printed PDFs
