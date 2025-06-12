@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UdeM Course Planner - 2025-2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .schedule-slot {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .schedule-slot.selected {
+            z-index: 10;
+        }
+        .course-card {
+            transition: box-shadow 0.3s ease;
+        }
+        .tab {
+            transition: all 0.2s ease-in-out;
+        }
+        .schedule-slot.conflict {
+            background-color: #fee2e2 !important; /* red-100 */
+            border: 2px solid #ef4444; /* red-500 */
+        }
+        .schedule-slot.conflict .course-code {
+            color: #b91c1c; /* red-700 */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900">Course Planner</h1>
+            <p class="text-lg text-slate-600 mt-2">Université de Montréal | 2025-2026</p>
+        </header>
+
+        <!-- Semester Tabs -->
+        <div class="mb-8 flex justify-center border-b border-slate-200">
+            <button id="tab-fall2025" onclick="switchSemester('fall2025')" class="tab font-semibold text-lg py-3 px-6 border-b-2 border-blue-500 text-blue-600">
+                Automne 2025
+            </button>
+            <button id="tab-winter2026" onclick="switchSemester('winter2026')" class="tab font-semibold text-lg py-3 px-6 border-b-2 border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700">
+                Hiver 2026
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column: Course Listings -->
+            <div class="lg:col-span-2 space-y-8">
+                <div id="course-blocks-container">
+                    <!-- Course blocks will be rendered here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Right Column: My Schedule -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg">
+                        <h2 id="schedule-title" class="text-2xl font-bold mb-6 text-center text-slate-900">My Weekly Schedule</h2>
+                        <div id="schedule-grid" class="grid grid-cols-1 gap-1 text-center text-xs sm:text-sm">
+                             <!-- Grid will be rendered here -->
+                        </div>
+                         <div id="schedule-summary" class="mt-6 space-y-3">
+                            <!-- Summary of selected courses will be rendered here -->
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA STRUCTURE ---
+        const fullData = {
+            "fall2025": {
+                name: "Automne 2025",
+                blocs: {
+                    "Bloc 70A": {
+                        title: "Fondements",
+                        credits: "15.00 requis",
+                        courses: [
+                            { code: "IFT1400", name: "Introduction à l’IA", credits: 3.00, description: "Définition de l’IA et vocabulaire du domaine, historique, les métiers reliés à l’IA, les différents types d’IA, les étapes clés d’un projet IA, éléments techniques de base et démonstrations.", sections: [
+                                { id: "IFT1400-A", day: "Ma", time: "18:30 - 21:29", dates: "09/02/2025 - 12/09/2025", location: "En ligne", selected: false },
+                                { id: "IFT1400-B", day: "Lun", time: "18:30 - 21:29", dates: "09/02/2025 - 12/09/2025", location: "En ligne", selected: false },
+                            ]},
+                            { code: "IFT1410", name: "IA générative appliquée", credits: 3.00, description: "Outils et applications en IA générative selon différents secteurs d’activité. Utilisation efficace d’outils d’IA générative. Rédaction de prompts. Cas concrets d’implantation de l’IA dans les organisations. Veille technologique et stratégique.", sections: [
+                                { id: "IFT1410-A", day: "Mer", time: "18:30 - 21:29", dates: "09/02/2025 - 12/09/2025", location: "En ligne", selected: false },
+                                { id: "IFT1410-B", day: "V", time: "18:30 - 21:29", dates: "09/02/2025 - 12/05/2025", location: "En ligne", selected: false },
+                            ]},
+                            { code: "SIA2000", name: "Droit et gouvernance de l’IA", credits: 3.00, description: "Introduction au droit en lien avec l’IA. Propriété intellectuelle, droits à la vie privée, commercial, règlementaire et fondamentaux. Principales approches de la gouvernance. Qualité, cycle de vie et confidentialité des données. Gestion des risques.", sections: [
+                                { id: "SIA2000-Z", day: "Ma", time: "18:30 - 21:29", dates: "09/02/2025 - 12/23/2025", location: "En ligne", selected: false },
+                            ]}
+                        ]
+                    },
+                     "Bloc 70B": {
+                        title: "Optimisation des affaires et IA", credits: "6.00 requis",
+                        courses: [
+                            { code: "SIA1010", name: "Économie, commerce et IA", credits: 3.00, description: "Aucun détail de cours ou d'horaire fourni dans les données.", sections: [] },
+                            { code: "REI3850", name: "Gest. chang./adoption de l’IA", credits: 3.00, description: "Aucun détail de cours fourni dans les données.", sections: [
+                                 { id: "REI3850-A", day: "Lun", time: "18:30 - 21:29", dates: "09/08/2025 - 12/23/2025", location: "En ligne", selected: false }
+                            ]}
+                        ]
+                    },
+                    "Bloc 70D": {
+                        title: "Formation complémentaire", credits: "Optionnel",
+                        courses: [
+                            { code: "ASA1050G", name: "La gestion en santé", credits: 3.00, description: "Aucun détail de cours ou d'horaire fourni pour ce trimestre.", sections: []},
+                            { code: "CRE1001", name: "Fondements de la créativité", credits: 3.00, description: "Aucun détail de cours ou d'horaire fourni pour ce trimestre.", sections: [] },
+                            { code: "EDP2900", name: "I.A. et création de contenus", credits: 3.00, description: "Aucun détail de cours ou d'horaire fourni pour ce trimestre.", sections: [] },
+                            { code: "IFT1931", name: "Init. aux bases de données", credits: 3.00, description: "Aucun détail de cours ou d'horaire fourni pour ce trimestre.", sections: []},
+                            { code: "REI1610G", name: "Prat. gestion innov. mobilis.", credits: 3.00, description: "Aucun détail de cours ou d'horaire fourni pour ce trimestre.", sections: []},
+                        ]
+                    }
+                }
+            },
+            "winter2026": {
+                name: "Hiver 2026",
+                blocs: {
+                    "Bloc 70A": {
+                        title: "Fondements", credits: "15.00 requis",
+                        courses: [
+                             { code: "IFT1400", name: "Introduction à l’IA", credits: 3.00, description: "Définition de l’IA et vocabulaire du domaine, historique, les métiers reliés à l’IA, les différents types d’IA, les étapes clés d’un projet IA, éléments techniques de base et démonstrations.", sections: [
+                                { id: "IFT1400-A-W26", day: "Lun", time: "18:30 - 21:29", dates: "01/07/2026 - 04/16/2026", location: "En ligne", selected: false },
+                             ]},
+                             { code: "IFT1410", name: "IA générative appliquée", credits: 3.00, description: "Outils et applications en IA générative selon différents secteurs d’activité. Utilisation efficace d’outils d’IA générative. Rédaction de prompts. Cas concrets d’implantation de l’IA dans les organisations. Veille technologique et stratégique.", sections: [
+                                { id: "IFT1410-A-W26", day: "Mer", time: "18:30 - 21:29", dates: "01/07/2026 - 04/16/2026", location: "En ligne", selected: false },
+                                { id: "IFT1410-B-W26", day: "V", time: "18:30 - 21:29", dates: "01/07/2026 - 04/16/2026", location: "En ligne", selected: false },
+                             ]},
+                            { code: "PHI1961", name: "Éthique, resp. sociale et IA", credits: 3.00, description: "Enjeux éthiques associés aux applications de l'intelligence artificielle et leurs répercussions sur le plan social. Introduction à l’éthique de l’intelligence artificielle et analyse d’études de cas pertinents.", sections: [
+                                { id: "PHI1961-A-W26", day: "Ma", time: "18:30 - 21:29", dates: "01/07/2026 - 04/17/2026", location: "En ligne", selected: false },
+                            ]},
+                            { code: "SIA3000", name: "Projet intégrateur", credits: 3.00, description: "Planification et réalisation d’un projet d’IA à partir d’études de cas ou de situations vécues en organisation afin d’intégrer les notions vues dans l’ensemble du programme.", sections: [
+                                { id: "SIA3000-Z-W26", day: "Lun", time: "18:30 - 21:29", dates: "01/07/2026 - 04/30/2026", location: "En ligne", selected: false },
+                            ]}
+                        ]
+                    },
+                    "Bloc 70B": {
+                        title: "Optimisation des affaires et IA", credits: "6.00 requis",
+                        courses: [
+                            { code: "SIA2021", name: "Chaîne logistique et IA", credits: 3.00, description: "Introduction à la logistique, chaîne de valeur et optimisation des flux. Outils de collecte de données. Chaîne logistique intelligente. Contrôle et maintenance préventive.", sections: [
+                                { id: "SIA2021-Z-W26", day: "Mer", time: "18:30 - 21:29", dates: "01/07/2026 - 04/30/2026", location: "En ligne", selected: false },
+                            ]}
+                        ]
+                    },
+                    "Bloc 70C": {
+                        title: "Gestion et intégration de l'IA", credits: "6.00 requis",
+                        courses: [
+                            { code: "SIA2022", name: "Dév. de projet avec l’IA", credits: 3.00, description: "Introduction à la gestion de projet. Approfondissement des étapes d’un projet d’IA. Financement et subvention d’un projet d’IA. Estimation des coûts et des délais.", sections: [
+                                { id: "SIA2022-Z-W26", day: "Ma", time: "18:30 - 21:29", dates: "01/07/2026 - 04/30/2026", location: "En ligne", selected: false },
+                            ]}
+                        ]
+                    },
+                     "Bloc 70D": {
+                        title: "Formation complémentaire", credits: "Optionnel",
+                        courses: [
+                            { code: "ASA1050G", name: "La gestion en santé", credits: 3.00, description: "Meilleures pratiques en gestion et nouveaux modes de gestion en santé. Rôles et responsabilités d'un cadre intermédiaire. Défis et enjeux.", sections: [], scheduleNote: "Horaire intensif les fins de semaine" },
+                            { code: "CRE2009", name: "Créativité/innov.: ind. org.", credits: 3.00, description: "Facteurs humains (cognitifs, affectifs, conatifs) et environnementaux (économiques, sociaux, culturels, conjoncturels) de la créativité et de l’innovation.", sections: [], scheduleNote: "Horaire les fins de semaine, sur campus" },
+                            { code: "EDP2900", name: "I.A. et création de contenus", credits: 3.00, description: "Aucun détail de cours ou d'horaire fourni pour ce trimestre.", sections: []},
+                            { code: "IFT1931", name: "Init. aux bases de données", credits: 3.00, description: "Environnement de travail. Notions fondamentales. Tables, requêtes, formulaires et rapports. Gestion d'une base de données.", sections: [
+                                { id: "IFT1931-A-W26", day: "Lun", time: "18:30 - 22:29", dates: "01/07/2026 - 04/16/2026", location: "Campus Montréal", selected: false, note: "Cours (TH) + Labo (TP)" },
+                            ]},
+                            { code: "REI1030G", name: "Gestion et fonctions de l'organisation", credits: 3.00, description: "Rôles et principales activités des gestionnaires. Fondements de l'organisation. Gestion stratégique. Diverses fonctions organisationnelles.", sections: [], scheduleNote: "En ligne, horaire à communiquer" },
+                        ]
+                    }
+                }
+            }
+        };
+        
+        let currentSemester = 'fall2025';
+        const colors = ['bg-sky-500', 'bg-emerald-500', 'bg-amber-500', 'bg-violet-500', 'bg-pink-500', 'bg-teal-500', 'bg-rose-500', 'bg-cyan-500', 'bg-indigo-500', 'bg-lime-500'];
+        let colorIndex = 0;
+
+        // Assign persistent colors to courses
+        const courseColors = {};
+        Object.values(fullData).forEach(semester => {
+            Object.values(semester.blocs).forEach(bloc => {
+                bloc.courses.forEach(course => {
+                    if (!courseColors[course.code]) {
+                        courseColors[course.code] = colors[colorIndex % colors.length];
+                        colorIndex++;
+                    }
+                    course.color = courseColors[course.code];
+                });
+            });
+        });
+
+        // --- RENDER FUNCTIONS ---
+
+        function renderCourses() {
+            const container = document.getElementById('course-blocks-container');
+            const semester = fullData[currentSemester];
+            container.innerHTML = '';
+            
+            for (const blocKey in semester.blocs) {
+                const bloc = semester.blocs[blocKey];
+                const blocElement = document.createElement('div');
+                blocElement.className = 'bg-white p-6 rounded-2xl shadow-lg';
+                
+                let coursesHTML = bloc.courses.map(course => {
+                    const sectionsHTML = course.sections.length > 0 ? course.sections.map(section => `
+                        <tr class="border-b border-slate-200 last:border-b-0">
+                            <td class="p-4 text-slate-700">
+                                <div class="font-semibold">${section.id.split('-')[1]}</div>
+                                <div class="text-xs text-slate-500">${section.location}</div>
+                                ${section.note ? `<div class="text-xs text-slate-500 italic mt-1">${section.note}</div>` : ''}
+                            </td>
+                            <td class="p-4 text-slate-700">${section.day}</td>
+                            <td class="p-4 text-slate-700">${section.time}</td>
+                            <td class="p-4 text-slate-700 text-xs">${section.dates}</td>
+                            <td class="p-4 text-right">
+                                <button 
+                                    onclick="toggleCourseSelection('${course.code}', '${section.id}')"
+                                    class="${section.selected ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'} text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm w-24">
+                                    ${section.selected ? 'Enlever' : 'Ajouter'}
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('') : ``;
+
+                    const noSectionsNote = (course.sections.length === 0 && course.scheduleNote) 
+                        ? `<div class="mt-3 p-3 bg-slate-50 rounded-lg text-center text-slate-500 italic text-sm">${course.scheduleNote}</div>`
+                        : (course.sections.length === 0) 
+                        ? `<div class="mt-3 p-3 bg-slate-50 rounded-lg text-center text-slate-500 italic text-sm">Aucune section programmée pour ce trimestre.</div>`
+                        : '';
+
+                    return `
+                        <div class="mt-4 border-t border-slate-200 pt-4">
+                            <h4 class="text-xl font-bold text-slate-900">${course.code} - ${course.name}</h4>
+                            <p class="text-sm text-slate-500 mt-1">${course.credits.toFixed(2)} crédits</p>
+                            <p class="text-sm text-slate-600 mt-2 max-w-2xl">${course.description}</p>
+                            ${(course.sections.length > 0) ? `
+                            <div class="mt-4 overflow-x-auto">
+                                <table class="w-full text-left table-auto">
+                                    <thead>
+                                        <tr class="bg-slate-50">
+                                            <th class="p-4 font-semibold text-slate-600 text-sm">Section</th>
+                                            <th class="p-4 font-semibold text-slate-600 text-sm">Jour</th>
+                                            <th class="p-4 font-semibold text-slate-600 text-sm">Heure</th>
+                                            <th class="p-4 font-semibold text-slate-600 text-sm">Dates</th>
+                                            <th class="p-4"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>${sectionsHTML}</tbody>
+                                </table>
+                            </div>` : noSectionsNote}
+                        </div>
+                    `;
+                }).join('');
+
+                blocElement.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-slate-900">${bloc.title}</h3>
+                        <span class="text-sm font-medium bg-slate-100 text-slate-700 py-1 px-3 rounded-full">${bloc.credits}</span>
+                    </div>
+                    ${coursesHTML}
+                `;
+                container.appendChild(blocElement);
+            }
+        }
+
+        function renderSchedule() {
+            const gridContainer = document.getElementById('schedule-grid');
+            const summaryContainer = document.getElementById('schedule-summary');
+            gridContainer.innerHTML = `
+                <div class="grid grid-cols-6 gap-1 font-semibold text-slate-600">
+                    <div></div>
+                    <div class="p-2">Lun</div><div class="p-2">Mar</div><div class="p-2">Mer</div><div class="p-2">Jeu</div><div class="p-2">Ven</div>
+                </div>
+                <div class="grid grid-cols-6 gap-1 items-center">
+                    <div class="p-2 font-semibold text-slate-500 text-right text-xs">18:30-22:30</div>
+                    <div data-day="Lun" class="h-24 bg-slate-100 rounded-lg schedule-slot"></div>
+                    <div data-day="Ma" class="h-24 bg-slate-100 rounded-lg schedule-slot"></div>
+                    <div data-day="Mer" class="h-24 bg-slate-100 rounded-lg schedule-slot"></div>
+                    <div data-day="Jeu" class="h-24 bg-slate-100 rounded-lg schedule-slot"></div>
+                    <div data-day="V" class="h-24 bg-slate-100 rounded-lg schedule-slot"></div>
+                </div>`;
+            summaryContainer.innerHTML = '';
+            document.getElementById('schedule-title').textContent = `Mon horaire - ${fullData[currentSemester].name}`;
+            
+            const scheduleMap = { "Lun": [], "Ma": [], "Mer": [], "Jeu": [], "V": [] };
+            const semester = fullData[currentSemester];
+            
+            Object.values(semester.blocs).forEach(bloc => {
+                bloc.courses.forEach(course => {
+                    course.sections.forEach(section => {
+                        if (section.selected && scheduleMap[section.day]) {
+                             scheduleMap[section.day].push({ course, section });
+                        }
+                    });
+                });
+            });
+
+            for (const day in scheduleMap) {
+                const daySlot = document.querySelector(`.schedule-slot[data-day="${day}"]`);
+                const scheduledItems = scheduleMap[day];
+
+                if (scheduledItems.length > 0) {
+                    daySlot.classList.remove('bg-slate-100');
+                    if (scheduledItems.length > 1) {
+                         daySlot.classList.add('conflict', 'p-2', 'flex', 'flex-col', 'justify-center', 'items-center');
+                         daySlot.innerHTML = scheduledItems.map(item => `<div class="font-bold text-sm course-code">${item.course.code}</div>`).join('<hr class="w-full my-1 border-red-300">');
+                    } else {
+                        const { course, section } = scheduledItems[0];
+                        daySlot.classList.add(course.color, 'text-white', 'p-2', 'flex', 'flex-col', 'justify-center', 'items-center', 'shadow-md', 'scale-105', 'selected');
+                        daySlot.innerHTML = `
+                            <div class="font-bold text-base text-center">${course.code}</div>
+                            <div class="text-xs opacity-90 text-center">${section.time}</div>`;
+                    }
+                }
+            }
+
+             // Render summary
+             const allSelected = Object.values(scheduleMap).flat().sort((a,b) => Object.keys(scheduleMap).indexOf(a.section.day) - Object.keys(scheduleMap).indexOf(b.section.day));
+             if (allSelected.length === 0) {
+                 summaryContainer.innerHTML = '<p class="text-center text-slate-500 italic">Ajoutez un cours à votre horaire.</p>';
+             } else {
+                 allSelected.forEach(({course, section}) => {
+                    const summaryItem = document.createElement('div');
+                    summaryItem.className = `flex items-center justify-between p-3 rounded-lg border-l-4 ${course.color.replace('bg-', 'border-')}`;
+                    summaryItem.innerHTML = `
+                        <div>
+                            <div class="font-bold text-slate-800">${course.code}</div>
+                            <div class="text-sm text-slate-600">${course.name}</div>
+                        </div>
+                        <div class="text-right text-sm text-slate-500">
+                            <div>${section.day}</div>
+                            <div>${section.time}</div>
+                        </div>`;
+                    summaryContainer.appendChild(summaryItem);
+                 });
+             }
+        }
+
+        // --- EVENT HANDLERS ---
+        
+        window.switchSemester = (semesterKey) => {
+            currentSemester = semesterKey;
+            // Update tab styles
+            document.getElementById('tab-fall2025').className = semesterKey === 'fall2025'
+                ? 'tab font-semibold text-lg py-3 px-6 border-b-2 border-blue-500 text-blue-600'
+                : 'tab font-semibold text-lg py-3 px-6 border-b-2 border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700';
+            document.getElementById('tab-winter2026').className = semesterKey === 'winter2026'
+                ? 'tab font-semibold text-lg py-3 px-6 border-b-2 border-blue-500 text-blue-600'
+                : 'tab font-semibold text-lg py-3 px-6 border-b-2 border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700';
+            renderAll();
+        };
+
+        window.toggleCourseSelection = (courseCode, sectionId) => {
+            const semester = fullData[currentSemester];
+            let targetCourse, targetSection;
+            for(const bloc of Object.values(semester.blocs)) {
+                const foundCourse = bloc.courses.find(c => c.code === courseCode);
+                if (foundCourse) {
+                    targetCourse = foundCourse;
+                    targetSection = foundCourse.sections.find(s => s.id === sectionId);
+                    break;
+                }
+            }
+
+            if (!targetCourse || !targetSection) return;
+            
+            const currentlySelected = targetSection.selected;
+            
+            // Deselect all sections for this course first
+            targetCourse.sections.forEach(s => s.selected = false);
+
+            // If it was not selected before, select it now
+            if (!currentlySelected) {
+                targetSection.selected = true;
+            }
+
+            renderAll();
+        };
+        
+        function renderAll() {
+            renderCourses();
+            renderSchedule();
+        }
+
+        // Initial render on page load
+        document.addEventListener('DOMContentLoaded', renderAll);
+    </script>
+</body>
+</html>
