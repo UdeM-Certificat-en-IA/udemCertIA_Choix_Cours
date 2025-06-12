@@ -5,3 +5,5 @@
 
 ## Closed
 - [x] Added initial test and basic repo maintenance files
+
+- [x] Added README and doc directory with TODO placeholder
