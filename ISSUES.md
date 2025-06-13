@@ -14,3 +14,5 @@
 - [x] Added script for batch PDF conversion by folder
 - [x] Validate Markdown output not empty via CLI test
 - [x] Remove pytest output directory from repository
+- [x] Slugify filenames in converter and add test
+- [x] Add regression test to ensure slugified filenames are not corrupted
