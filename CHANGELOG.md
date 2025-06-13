@@ -11,3 +11,4 @@
 - OCR fallback with tesseract/pdftoppm and --lang CLI option
 - Moved legacy pdfminer-only script to `scripts/legacy`
 - Test ensures Markdown output is non-empty and ASCII
+- Removed pytest-of-root directory from repository and added to .gitignore
