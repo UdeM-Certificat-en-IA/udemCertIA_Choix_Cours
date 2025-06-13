@@ -11,3 +11,4 @@
 - OCR fallback with tesseract/pdftoppm and --lang CLI option
 - Moved legacy pdfminer-only script to `scripts/legacy`
 - Test ensures Markdown output is non-empty and ASCII
+- Verified PDF conversion scripts using system OCR dependencies
