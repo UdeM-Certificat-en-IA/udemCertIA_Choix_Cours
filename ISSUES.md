@@ -1,7 +1,7 @@
 # Issues Log
 
 ## Open
-- [ ] Verify environment dependencies for OCR on all platforms
+- [ ] Add tests for batch_pdf_to_md script
 
 ## Closed
 - [x] Documented usage of PDF conversion script
@@ -13,3 +13,4 @@
 - [x] Set up automated PDF to markdown conversion
 - [x] Added script for batch PDF conversion by folder
 - [x] Validate Markdown output not empty via CLI test
+- [x] Verify environment dependencies for OCR on all platforms

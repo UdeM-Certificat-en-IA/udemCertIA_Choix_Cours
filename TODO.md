@@ -8,3 +8,4 @@
 - [x] Add CLI option for language selection in OCR
 - [x] Ensure CLI tests validate Markdown output not empty
 - [ ] Add integration test for convert_folder script
+- [ ] Add integration test for batch_pdf_to_md script
