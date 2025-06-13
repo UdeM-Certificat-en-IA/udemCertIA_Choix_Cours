@@ -41,6 +41,30 @@ available in your environment.
 The previous `pdfminer`-only script is still available under `scripts/legacy`
 for reference.
 
+### Docker
+
+A Dockerfile and `docker-compose.yml` are provided for environment setup. Build and run commands will install both system and Python dependencies automatically inside a container.
+
+Build the Docker image:
+```bash
+docker-compose build
+```
+
+Start an interactive shell in the container:
+```bash
+docker-compose run --rm app
+```
+
+Run PDF conversion inside the container:
+```bash
+docker-compose run --rm app python scripts/convert_pdf_to_md.py <input.pdf> <output_directory> --lang eng
+```
+
+For batch conversion:
+```bash
+docker-compose run --rm app python scripts/batch_pdf_to_md.py <root_directory> --lang eng --silent
+```
+
 For converting an entire folder of PDFs, use `scripts/convert_folder.py`. Run it
 for **one folder at a time** to avoid excessive resource usage:
 
