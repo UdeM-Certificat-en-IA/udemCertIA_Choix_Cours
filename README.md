@@ -23,24 +23,29 @@ It includes baseline tests and documentation files to help guide development.
 ## PDF to Markdown Conversion
 The repository includes a helper script located at `scripts/convert_pdf_to_md.py`.
 This script converts a single PDF file to a Markdown document using the
-`pdf_to_md` package. Text is extracted with `pdfminer` and OCR is attempted
-with `tesseract` when needed.
+`pdf_to_md` package. Text is extracted with `pdfminer` and, when no text is
+found, OCR is attempted with `tesseract` (via the `pdftoppm` tool from
+**poppler**).
 
 Run the script from the repository root:
 
 ```bash
-python scripts/convert_pdf_to_md.py <path/to/file.pdf> <output_directory>
+python scripts/convert_pdf_to_md.py <path/to/file.pdf> <output_directory> --lang eng
 ```
 
 The output directory will contain a Markdown file named after the input PDF.
-Ensure that required dependencies such as `pdfminer.six` and `tesseract` are
+Ensure that required dependencies such as `pdfminer.six`, `tesseract` and the
+`poppler-utils` package are
 available in your environment.
+
+The previous `pdfminer`-only script is still available under `scripts/legacy`
+for reference.
 
 For converting an entire folder of PDFs, use `scripts/convert_folder.py`. Run it
 for **one folder at a time** to avoid excessive resource usage:
 
 ```bash
-python scripts/convert_folder.py <input_folder> <output_root> --silent
+python scripts/convert_folder.py <input_folder> <output_root> --lang eng --silent
 ```
 
 The command replicates the directory structure of `input_folder` inside
@@ -52,5 +57,5 @@ root directory (current directory by default) for directories named `.pdf` and o
 corresponding Markdown files into sibling `.md` folders.
 
 ```bash
-python scripts/batch_pdf_to_md.py --root <project_root> --silent
+python scripts/batch_pdf_to_md.py --root <project_root> --lang eng --silent
 ```

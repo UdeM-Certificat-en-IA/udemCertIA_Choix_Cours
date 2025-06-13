@@ -12,11 +12,16 @@ if str(script_dir) in sys.path:
 from pdf_to_md.converter import convert_pdf_to_md
 
 
-def convert_folder(input_dir: Path, output_root: Path, silent: bool = False) -> None:
+def convert_folder(
+    input_dir: Path,
+    output_root: Path,
+    silent: bool = False,
+    lang: str = "eng",
+) -> None:
     for pdf in input_dir.rglob('*.pdf'):
         relative = pdf.relative_to(input_dir)
         target_dir = output_root / relative.parent
-        convert_pdf_to_md(pdf, target_dir, silent=silent)
+        convert_pdf_to_md(pdf, target_dir, silent=silent, lang=lang)
 
 
 if __name__ == '__main__':
@@ -24,5 +29,6 @@ if __name__ == '__main__':
     parser.add_argument('input_dir', type=Path, help='Folder containing PDF files')
     parser.add_argument('output_root', type=Path, help='Output directory for Markdown files')
     parser.add_argument('--silent', action='store_true', help='Suppress status output')
+    parser.add_argument('--lang', default='eng', help='OCR language (tesseract code)')
     args = parser.parse_args()
-    convert_folder(args.input_dir, args.output_root, silent=args.silent)
+    convert_folder(args.input_dir, args.output_root, silent=args.silent, lang=args.lang)
