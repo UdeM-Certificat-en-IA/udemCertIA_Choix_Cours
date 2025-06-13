@@ -1,8 +1,8 @@
 # TODO
 - [x] Add baseline test framework
 - [x] Integrate PDF parsing scripts
-- [ ] Add OCR support for scanned PDFs
+- [x] Add OCR support for scanned PDFs
 - [x] Document usage of PDF conversion script
 - [x] Provide example for batch conversion across directories
 - [x] Create README and doc folder with TODO placeholder
-- [ ] Add CLI option for language selection in OCR
+- [x] Add CLI option for language selection in OCR

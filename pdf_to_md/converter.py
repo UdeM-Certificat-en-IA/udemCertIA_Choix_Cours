@@ -61,7 +61,13 @@ def ocr_pdf_text(pdf_path: Path, lang: str = "eng") -> str:
     return text
 
 
-def convert_pdf_to_md(pdf_path: Path, out_dir: Path, *, silent: bool = False) -> Path:
+def convert_pdf_to_md(
+    pdf_path: Path,
+    out_dir: Path,
+    *,
+    silent: bool = False,
+    lang: str = "eng",
+) -> Path:
     """Convert a PDF to Markdown.
 
     Parameters
@@ -83,7 +89,7 @@ def convert_pdf_to_md(pdf_path: Path, out_dir: Path, *, silent: bool = False) ->
     text = pdfminer_text(pdf_path)
     if not text.strip():
         # fallback to OCR if no text was extracted
-        text = ocr_pdf_text(pdf_path)
+        text = ocr_pdf_text(pdf_path, lang=lang)
         if not text.strip():
             print(f"Warning: no text extracted from {pdf_path}", file=sys.stderr)
     out_path = out_dir / (pdf_path.stem + ".md")

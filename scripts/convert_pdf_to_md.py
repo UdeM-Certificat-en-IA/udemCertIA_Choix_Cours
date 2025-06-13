@@ -16,6 +16,7 @@ if __name__ == "__main__":
     parser.add_argument("pdf", type=Path, help="Path to the PDF file")
     parser.add_argument("out_dir", type=Path, help="Directory for the output MD")
     parser.add_argument("--silent", action="store_true", help="Suppress status output")
+    parser.add_argument("--lang", default="eng", help="OCR language (tesseract code)")
     args = parser.parse_args()
 
-    convert_pdf_to_md(args.pdf, args.out_dir, silent=args.silent)
+    convert_pdf_to_md(args.pdf, args.out_dir, silent=args.silent, lang=args.lang)
