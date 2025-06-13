@@ -1,8 +1,14 @@
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+# ensure project root is prioritized and avoid script directory shadowing
+script_dir = Path(__file__).resolve().parent
+project_root = script_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+if str(script_dir) in sys.path:
+    sys.path.remove(str(script_dir))
 from pdf_to_md.converter import convert_pdf_to_md
 
 
