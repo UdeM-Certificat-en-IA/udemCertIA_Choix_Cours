@@ -9,3 +9,4 @@
 - [x] Ensure CLI tests validate Markdown output not empty
 - [ ] Add integration test for convert_folder script
 - [x] Remove pytest output directory from repository and ignore in git
+- [x] Slugify filenames for Markdown output
