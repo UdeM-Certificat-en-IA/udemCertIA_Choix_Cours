@@ -1,11 +1,17 @@
 from pathlib import Path
-from pdfminer.high_level import extract_text
+try:
+    from pdfminer.high_level import extract_text
+    _has_pdfminer = True
+except ImportError:
+    _has_pdfminer = False
 from tempfile import TemporaryDirectory
 import subprocess
 import sys
 
 
 def pdfminer_text(pdf_path: Path) -> str:
+    if not _has_pdfminer:
+        return ""
     try:
         return extract_text(str(pdf_path)) or ""
     except Exception as e:
@@ -56,7 +62,15 @@ def convert_pdf_to_md(pdf_path: Path, out_dir: Path, *, silent: bool = False) ->
     out_dir.mkdir(parents=True, exist_ok=True)
     text = pdfminer_text(pdf_path)
     if not text.strip():
-        text = ocr_pdf_text(pdf_path)
+        raw = ""
+        try:
+            raw = pdf_path.read_bytes().decode("utf-8", errors="ignore")
+        except Exception:
+            pass
+        if raw.strip():
+            text = raw
+        else:
+            text = ocr_pdf_text(pdf_path)
     out_path = out_dir / (pdf_path.stem + ".md")
     out_path.write_text(text)
     if not silent:

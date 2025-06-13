@@ -1,5 +1,22 @@
 # UdeM Course Planner
 
+## Installation
+
+### Python dependencies
+Install required Python packages from `requirements.txt`:
+```bash
+pip install -r requirements.txt
+```
+
+### System dependencies
+The PDF conversion script relies on external tools. On Debian/Ubuntu, install:
+```bash
+sudo apt-get update && sudo apt-get install -y \
+    tesseract-ocr \
+    poppler-utils
+```
+
+
 This project provides a simple web interface for planning courses at the Université de Montréal.
 It includes baseline tests and documentation files to help guide development.
 
@@ -28,3 +45,12 @@ python scripts/convert_folder.py <input_folder> <output_root> --silent
 
 The command replicates the directory structure of `input_folder` inside
 `output_root` and writes Markdown files without printing their contents.
+### Batch conversion of PDFs in `.pdf` directories
+To automatically convert all PDF files located within any `.pdf` folder in your project,
+use the `scripts/batch_pdf_to_md.py` script. It searches recursively under the specified
+root directory (current directory by default) for directories named `.pdf` and outputs
+corresponding Markdown files into sibling `.md` folders.
+
+```bash
+python scripts/batch_pdf_to_md.py --root <project_root> --silent
+```
