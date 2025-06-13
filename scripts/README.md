@@ -10,3 +10,43 @@ This directory contains helper scripts for converting PDF files to Markdown form
 | batch_pdf_to_md.py        | Batch convert PDFs in all `.pdf` subdirectories to `.md` sibling directories. | `python3 scripts/batch_pdf_to_md.py [--root <root_dir>] [--silent]`     |
 
 > Note: Use the `--silent` flag to suppress status output where supported.
+
+## Example: Batch Conversion for Semester Folders
+
+Suppose you have the following directory structure with PDF files in `.pdf` subfolders for each semester:
+
+```
+Courses/
+├── fall2025/
+│   └── .pdf/
+│       ├── intro_CS101.pdf
+│       └── algorithms_CS102.pdf
+├── winter2026/
+│   └── .pdf/
+│       └── data_structures_CS201.pdf
+└── summer2025/
+    └── .pdf/
+        └── machine_learning_CS301.pdf
+```
+
+Running the batch conversion script on the `Courses` root will automatically convert each `.pdf` folder to a sibling `.md` folder:
+
+```bash
+python3 scripts/batch_pdf_to_md.py --root Courses
+```
+
+After running, the structure becomes:
+
+```
+Courses/
+├── fall2025/
+│   └── .md/
+│       ├── intro_CS101.md
+│       └── algorithms_CS102.md
+├── winter2026/
+│   └── .md/
+│       └── data_structures_CS201.md
+└── summer2025/
+    └── .md/
+        └── machine_learning_CS301.md
+```
