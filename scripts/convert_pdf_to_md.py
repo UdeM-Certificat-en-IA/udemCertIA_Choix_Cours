@@ -1,3 +1,4 @@
+import argparse
 import sys
 from pathlib import Path
 
@@ -7,9 +8,10 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 from pdf_to_md.converter import convert_pdf_to_md
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: convert_pdf_to_md.py <pdf_path> <output_dir>")
-        sys.exit(1)
-    pdf = Path(sys.argv[1])
-    out_dir = Path(sys.argv[2])
-    convert_pdf_to_md(pdf, out_dir)
+    parser = argparse.ArgumentParser(description="Convert a PDF to Markdown")
+    parser.add_argument("pdf", type=Path, help="Path to the PDF file")
+    parser.add_argument("out_dir", type=Path, help="Directory for the output MD")
+    parser.add_argument("--silent", action="store_true", help="Suppress status output")
+    args = parser.parse_args()
+
+    convert_pdf_to_md(args.pdf, args.out_dir, silent=args.silent)
