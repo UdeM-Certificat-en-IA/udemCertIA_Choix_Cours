@@ -12,3 +12,4 @@
 - [x] Added README and doc directory with TODO placeholder
 - [x] Set up automated PDF to markdown conversion
 - [x] Added script for batch PDF conversion by folder
+- [x] Validate Markdown output not empty via CLI test

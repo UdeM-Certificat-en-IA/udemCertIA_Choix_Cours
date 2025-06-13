@@ -22,4 +22,10 @@ def test_cli_convert(tmp_path, lang):
 
     md_file = out_dir / 'sample_cli.md'
     assert md_file.exists()
-    assert text in md_file.read_text()
+    content = md_file.read_bytes()
+    assert content, 'Markdown output is empty'
+    assert b'\x00' not in content, 'Null bytes found in Markdown output'
+    text_content = content.decode('utf-8')
+    assert text in text_content
+    assert text_content.strip() != ''
+    assert all(ord(ch) < 128 or ch.isspace() for ch in text_content)
