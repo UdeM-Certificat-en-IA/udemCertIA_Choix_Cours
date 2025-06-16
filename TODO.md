@@ -10,3 +10,5 @@
 - [ ] Add integration test for convert_folder script
 - [x] Remove pytest output directory from repository and ignore in git
 - [x] Slugify filenames for Markdown output
+- [x] Add script to sanitize course filenames before conversion
+- [ ] Add tests for sanitize_filenames script

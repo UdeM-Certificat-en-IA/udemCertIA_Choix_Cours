@@ -13,3 +13,4 @@
 - Test ensures Markdown output is non-empty and ASCII
 - Removed pytest-of-root directory from repository and added to .gitignore
 - Filenames are now slugified to ASCII-only names with new tests
+- Added script to sanitize course filenames before conversion
