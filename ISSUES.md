@@ -2,6 +2,7 @@
 
 ## Open
 - [ ] Verify environment dependencies for OCR on all platforms
+- [ ] Add tests for sanitize_filenames script
 
 ## Closed
 - [x] Documented usage of PDF conversion script
