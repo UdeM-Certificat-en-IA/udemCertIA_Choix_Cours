@@ -1,4 +1,3 @@
 # TODO
 
-- [x] Initial parser for course Markdown to CSV/JSON
-- [ ] Expand parser to handle real course formats
+This directory is deprecated. Please refer to the root-level `TODO.md` for up-to-date tasks and status.

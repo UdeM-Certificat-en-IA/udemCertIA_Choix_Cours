@@ -1,0 +1,1 @@
+{"rules": [{"type": "mandatory", "block": "Fundamentals", "required": 1}, {"type": "elective", "block": "Advanced Topics", "choose": 1, "from": ["CS300", "CS310"]}]}

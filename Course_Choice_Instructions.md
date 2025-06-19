@@ -12,11 +12,11 @@
  - Navigate to the `Courses/` folder.
  - For each semester subfolder (e.g., `fall2025/`, `summer2025/`, `winter2026/`):
    - Check for existing Markdown files for that semester.
-   - If Markdown files do not exist or are empty, run the PDF-to-Markdown conversion script, e.g.:
+   - If Markdown files do not exist or are empty, run the PDF-to-Markdown conversion script. For example:
      ```bash
-     python pdf_to_md/converter.py Courses/fall2025/fall2025_all.pdf
+     python scripts/convert_pdf_to_md.py Courses/fall2025/fall2025_all.pdf output_md/fall2025 --lang eng
      ```
-   - Collect all resulting `.md` files for that semester.
+   - Collect all resulting `.md` files for that semester (in `output_md/fall2025`).
  - Parse each Markdown file to extract:
    - Course code and title
    - Block/category (e.g., Mandatory, Optional)

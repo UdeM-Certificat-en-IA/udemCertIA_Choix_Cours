@@ -1,8 +1,12 @@
 # Issues Log
 
 ## Open
-
-_No open issues_
+- Document Python & system dependency setup (pip, tesseract, poppler-utils, pulp, reportlab).
+- Create CONTRIBUTING.md with development workflow and environment setup.
+- Configure CI pipeline for linting, testing, and coverage (e.g., GitHub Actions).
+- Enhance PDF-to-Markdown parsing for complex layouts and real UdeM Markdown formats.
+- Extend planner optimizer for prerequisites, term credit limits, and additional rule types.
+- Add tests for fallback behaviors (missing dependencies) and OCR integration.
 
 ## Closed
 - [x] Organize tests into logical modules and clean up old directories

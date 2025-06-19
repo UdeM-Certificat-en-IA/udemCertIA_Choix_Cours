@@ -1,5 +1,25 @@
 __pycache__/
-.pytest_cache/
-venv/
+*.py[cod]
+*$py.class
 
-pytest-of-root/
+# Unit test / coverage
+.pytest_cache/
+.coverage
+
+# Generated files
+courses.csv
+*_courses.json
+schedule.json
+
+# Output directories for markdown conversion
+output_md/
+
+# Logs and miscellaneous
+*.log
+*.tmp
+*.swp
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db

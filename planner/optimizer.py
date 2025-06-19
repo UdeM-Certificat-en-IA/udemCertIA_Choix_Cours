@@ -4,7 +4,12 @@ from pathlib import Path
 from typing import List, Dict, Any
 import csv
 import json
-import pulp
+try:
+    import pulp
+    _has_pulp = True
+except ImportError:
+    pulp = None  # type: ignore
+    _has_pulp = False
 
 
 def load_courses(path: Path) -> List[Dict[str, Any]]:
@@ -29,9 +34,42 @@ def plan_schedule(courses: List[Dict[str, Any]], student: Dict[str, Any], rules:
     taken = set(student.get("courses_taken", []))
     preferred_days = {d.lower() for d in student.get("preferred_days", [])}
 
+    # If pulp is unavailable, fallback to a simple greedy selection
+    if not _has_pulp:
+        # compute weights based on preferred days
+        weights = []
+        for course in courses:
+            days = [d.lower() for d in course.get("days_offered", [])]
+            weights.append(len(set(days) & preferred_days))
+        selected_idxs: list[int] = []
+        # apply rules in order
+        for rule in rules.get("rules", []):
+            rtype = rule.get("type")
+            if rtype == "mandatory":
+                block = rule.get("block")
+                choose = int(rule.get("required", 0))
+                valid = [i for i, c in enumerate(courses)
+                         if c.get("block") == block and c.get("course_code") not in taken]
+                valid.sort(key=lambda i: weights[i], reverse=True)
+                selected_idxs.extend(valid[:choose])
+            elif rtype == "elective":
+                choose = int(rule.get("choose", 0))
+                if "from" in rule:
+                    valid = [i for i, c in enumerate(courses)
+                             if c.get("course_code") in rule.get("from", []) and c.get("course_code") not in taken]
+                else:
+                    block = rule.get("block")
+                    valid = [i for i, c in enumerate(courses)
+                             if c.get("block") == block and c.get("course_code") not in taken]
+                valid.sort(key=lambda i: weights[i], reverse=True)
+                selected_idxs.extend(valid[:choose])
+        selected = [courses[i]["course_code"] for i in selected_idxs]
+        return {"selected_courses": selected}
+
+    # use pulp solver when available
     prob = pulp.LpProblem("schedule", pulp.LpMaximize)
-    variables = {}
-    weights = {}
+    variables: dict[int, Any] = {}
+    weights: dict[int, int] = {}
     for i, course in enumerate(courses):
         var = pulp.LpVariable(f"x_{i}", cat="Binary")
         if course.get("course_code") in taken:
@@ -40,7 +78,6 @@ def plan_schedule(courses: List[Dict[str, Any]], student: Dict[str, Any], rules:
         days = [d.lower() for d in course.get("days_offered", [])]
         weights[i] = len(set(days) & preferred_days)
 
-    # Objective: maximize preferred day matches
     prob += pulp.lpSum(weights[i] * variables[i] for i in variables)
 
     for rule in rules.get("rules", []):

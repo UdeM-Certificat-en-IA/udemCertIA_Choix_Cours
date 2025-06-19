@@ -1,17 +1,30 @@
 # TODO
-- [x] Add baseline test framework
-- [x] Integrate PDF parsing scripts
-- [x] Add OCR support for scanned PDFs
-- [x] Document usage of PDF conversion script
-- [x] Provide example for batch conversion across directories
-- [x] Create README and doc folder with TODO placeholder
-- [x] Add CLI option for language selection in OCR
-- [x] Ensure CLI tests validate Markdown output not empty
-- [x] Add integration test for convert_folder script
-- [x] Remove pytest output directory from repository and ignore in git
-- [x] Slugify filenames for Markdown output
-- [x] Add course parser script generating CSV and JSON
-- [x] Add course planning optimizer and CLI script
-- [ ] Maintain `check_env.py` script as dependencies evolve
-- [x] Organize tests into logical modules and remove legacy paths
-- [x] Ensure `plan_schedule.py` works without PYTHONPATH and add CLI test
+
+## Environment & Dependencies
+- [ ] Create CONTRIBUTING.md with setup instructions (Python 3.x, virtualenv, `pip install -r requirements.txt`).
+- [ ] Document system dependencies: tesseract, poppler-utils; include install commands for Linux, macOS, and Windows.
+- [ ] Ensure PuLP installation is documented (`pip install pulp`).
+- [ ] Verify `pdfminer.six`, `reportlab`, and other Python packages install cleanly in CI environment.
+
+## Features & Improvements
+- [ ] Enhance PDF-to-Markdown converter to handle multi-column layouts and inconsistent formatting.
+- [ ] Extend OCR fallback with configurable resolution, DPI, and language packs.
+- [ ] Improve `parse_courses.py` to extract prerequisites, instructor, location, and session metadata.
+- [ ] Validate Markdown content against `template.json` schema for real UdeM courses.
+- [ ] Upgrade planner optimizer to enforce term credit caps, prerequisites, and maximize additional preferences.
+- [ ] Support advanced certificate rule types (e.g., maximum credits per block, alternative requirements).
+
+## Testing & CI
+- [ ] Add GitHub Actions workflow for linting (flake8), formatting (black), and pytest execution.
+- [ ] Create tests for fallback behavior when PuLP or OCR tools are missing.
+- [ ] Add integration tests for scanned PDF OCR conversion and verify output.
+- [ ] Enhance `check_env.py` tests to suggest installation commands for missing dependencies.
+- [ ] Add container-based tests using Dockerfile/docker-compose for end-to-end validation.
+
+## Documentation
+- [ ] Update `README.md` with troubleshooting steps for missing `pip`/`pip3` and dependency failures.
+- [ ] Publish API reference documentation for `pdf_to_md.converter`, `parse_courses`, and `planner.optimizer`.
+- [ ] Document project structure, naming conventions, and sample workflows in CONTRIBUTING guide.
+
+## Maintenance
+- [ ] Maintain `scripts/check_env.py` as new dependencies are introduced or evolve.
