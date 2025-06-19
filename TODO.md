@@ -14,3 +14,4 @@
 - [x] Add course planning optimizer and CLI script
 - [ ] Maintain `check_env.py` script as dependencies evolve
 - [x] Organize tests into logical modules and remove legacy paths
+- [x] Ensure `plan_schedule.py` works without PYTHONPATH and add CLI test

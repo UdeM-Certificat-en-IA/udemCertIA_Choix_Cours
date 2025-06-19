@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import subprocess
 import sys
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
@@ -44,3 +45,28 @@ def test_plan_schedule(tmp_path):
     schedule = plan_schedule(courses, student, rules)
     selected = schedule["selected_courses"]
     assert set(selected) == {"CS200", "CS300"}
+
+
+def test_plan_schedule_cli(tmp_path):
+    csv_path, student_path, rules_path = create_mock_data(tmp_path)
+    schedule_path = tmp_path / "schedule.json"
+    script = Path(__file__).resolve().parents[1] / "scripts" / "plan_schedule.py"
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(script),
+            str(csv_path),
+            str(student_path),
+            str(rules_path),
+            "-o",
+            str(schedule_path),
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+
+    assert result.stdout.strip() != ""
+    assert schedule_path.exists()
+    data = json.loads(schedule_path.read_text())
+    assert set(data["selected_courses"]) == {"CS200", "CS300"}

@@ -22,3 +22,4 @@ _No open issues_
 - [x] Implement course parser generating CSV and JSON
 - [x] Fix permission of parse_courses script
 - [x] Implement ILP-based course planner with tests
+- [x] Ensure `plan_schedule.py` works without PYTHONPATH and add CLI test
