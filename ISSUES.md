@@ -15,3 +15,5 @@
 - [x] Validate Markdown output not empty via CLI test
 - [x] Remove pytest output directory from repository
 - [x] Slugify filenames in converter and add test
+- [x] Add integration test for convert_folder script
+- [x] Restored OCR loop using pdftoppm and tesseract
