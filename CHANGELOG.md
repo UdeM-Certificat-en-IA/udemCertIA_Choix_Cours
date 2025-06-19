@@ -18,3 +18,5 @@
 - Added course parser script generating CSV and semester JSON files
 - Made `parse_courses.py` executable for consistency
 - Implemented ILP-based course planner with CLI and tests
+- Environment check script verifying pdfminer.six, tesseract and pdftoppm
+- Installation instructions for macOS and Windows

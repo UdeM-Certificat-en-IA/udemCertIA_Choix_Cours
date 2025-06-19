@@ -9,11 +9,25 @@ pip install -r requirements.txt
 ```
 
 ### System dependencies
-The PDF conversion script relies on external tools. On Debian/Ubuntu, install:
+The PDF conversion script relies on external tools. Below are quick installation
+steps for common platforms when running outside the provided Docker
+environment.
+
+**Debian/Ubuntu**
 ```bash
 sudo apt-get update && sudo apt-get install -y \
     tesseract-ocr \
     poppler-utils
+```
+
+**macOS (Homebrew)**
+```bash
+brew install tesseract poppler
+```
+
+**Windows (Chocolatey)**
+```powershell
+choco install tesseract poppler
 ```
 
 
