@@ -20,3 +20,5 @@
 - Implemented ILP-based course planner with CLI and tests
 - Environment check script verifying pdfminer.six, tesseract and pdftoppm
 - Installation instructions for macOS and Windows
+- Added tests for environment check script and expanded installation steps for
+  Windows and macOS

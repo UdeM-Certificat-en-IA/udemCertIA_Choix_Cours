@@ -11,24 +11,29 @@ pip install -r requirements.txt
 ### System dependencies
 The PDF conversion script relies on external tools. Below are quick installation
 steps for common platforms when running outside the provided Docker
-environment.
+environment. Install **tesseract** (OCR engine) and **poppler** (for the
+`pdftoppm` utility) so the conversion helpers can function correctly.
 
-**Debian/Ubuntu**
+#### Debian/Ubuntu
 ```bash
 sudo apt-get update && sudo apt-get install -y \
     tesseract-ocr \
     poppler-utils
 ```
 
-**macOS (Homebrew)**
+#### macOS (Homebrew)
+Install via [Homebrew](https://brew.sh/):
 ```bash
 brew install tesseract poppler
 ```
 
-**Windows (Chocolatey)**
+#### Windows (Chocolatey)
+With [Chocolatey](https://chocolatey.org/) installed run:
 ```powershell
 choco install tesseract poppler
 ```
+After installation ensure the directories containing `tesseract.exe` and
+`pdftoppm.exe` are added to your `PATH` environment variable.
 
 
 This project provides a simple web interface for planning courses at the Université de Montréal.
