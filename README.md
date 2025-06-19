@@ -83,3 +83,14 @@ corresponding Markdown files into sibling `.md` folders.
 ```bash
 python scripts/batch_pdf_to_md.py --root <project_root> --lang eng --silent
 ```
+
+### Parsing Course Markdown
+Use `scripts/parse_courses.py` to convert Markdown descriptions into a combined
+CSV and per-semester JSON files:
+
+```bash
+python scripts/parse_courses.py Courses
+```
+
+This will generate `courses.csv` and files like `fall2025_courses.json` in the
+current directory.
