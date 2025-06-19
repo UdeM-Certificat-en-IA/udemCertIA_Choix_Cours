@@ -1,9 +1,9 @@
 # Issues Log
 
 ## Open
-- [ ] Verify environment dependencies for OCR on all platforms
 
 ## Closed
+- [x] Verify environment dependencies for OCR on all platforms
 - [x] Documented usage of PDF conversion script
 - [x] Add integration test for convert_folder script
 - [x] Added initial test and basic repo maintenance files
