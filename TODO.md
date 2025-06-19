@@ -13,3 +13,4 @@
 - [x] Add course parser script generating CSV and JSON
 - [x] Add course planning optimizer and CLI script
 - [ ] Maintain `check_env.py` script as dependencies evolve
+- [ ] Organize tests into logical modules and remove legacy paths

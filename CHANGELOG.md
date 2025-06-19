@@ -22,3 +22,6 @@
 - Installation instructions for macOS and Windows
 - Added tests for environment check script and expanded installation steps for
   Windows and macOS
+
+### Changed
+- Consolidated slugify tests and removed nested `tests/tests` directory

@@ -2,7 +2,7 @@
 
 ## Open
 
-None at the moment.
+- [ ] Organize tests into logical modules and clean up old directories
 
 ## Closed
 - [x] Verify environment dependencies for OCR on all platforms
