@@ -2,9 +2,10 @@
 
 ## Open
 
-- [ ] Organize tests into logical modules and clean up old directories
+_No open issues_
 
 ## Closed
+- [x] Organize tests into logical modules and clean up old directories
 - [x] Verify environment dependencies for OCR on all platforms
 - [x] Documented usage of PDF conversion script
 - [x] Add integration test for convert_folder script

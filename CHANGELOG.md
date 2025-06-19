@@ -25,3 +25,4 @@
 
 ### Changed
 - Consolidated slugify tests and removed nested `tests/tests` directory
+- Confirmed ASCII slugify test lives in the main tests folder
