@@ -94,3 +94,13 @@ python scripts/parse_courses.py Courses
 
 This will generate `courses.csv` and files like `fall2025_courses.json` in the
 current directory.
+
+### Planning a Schedule
+Once you have a `courses.csv` file you can generate a recommended schedule.
+
+```bash
+python scripts/plan_schedule.py courses.csv student.json certificate_rules.json
+```
+
+The script outputs a JSON file (default `schedule.json`) listing the selected
+courses under `selected_courses`.

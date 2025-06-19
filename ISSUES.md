@@ -18,3 +18,4 @@
 - [x] Slugify filenames in converter and add test
 - [x] Implement course parser generating CSV and JSON
 - [x] Fix permission of parse_courses script
+- [x] Implement ILP-based course planner with tests

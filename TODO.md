@@ -11,3 +11,4 @@
 - [x] Remove pytest output directory from repository and ignore in git
 - [x] Slugify filenames for Markdown output
 - [x] Add course parser script generating CSV and JSON
+- [x] Add course planning optimizer and CLI script
