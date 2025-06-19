@@ -10,3 +10,4 @@
 - [ ] Add integration test for convert_folder script
 - [x] Remove pytest output directory from repository and ignore in git
 - [x] Slugify filenames for Markdown output
+- [x] Add course parser script generating CSV and JSON

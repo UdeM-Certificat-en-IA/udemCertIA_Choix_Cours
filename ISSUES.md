@@ -2,6 +2,7 @@
 
 ## Open
 - [ ] Verify environment dependencies for OCR on all platforms
+- [ ] Add integration test for convert_folder script
 
 ## Closed
 - [x] Documented usage of PDF conversion script
@@ -15,3 +16,5 @@
 - [x] Validate Markdown output not empty via CLI test
 - [x] Remove pytest output directory from repository
 - [x] Slugify filenames in converter and add test
+- [x] Implement course parser generating CSV and JSON
+- [x] Fix permission of parse_courses script

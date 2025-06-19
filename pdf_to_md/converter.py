@@ -35,7 +35,39 @@ def ocr_pdf_text(pdf_path: Path, lang: str = "eng") -> str:
     with TemporaryDirectory() as tmpdir:
         tmp_prefix = Path(tmpdir) / "page"
         # convert PDF pages to images
-@@ -60,40 +71,42 @@ def ocr_pdf_text(pdf_path: Path, lang: str = "eng") -> str:
+        try:
+            subprocess.run([
+                "pdftoppm",
+                str(pdf_path),
+                str(tmp_prefix),
+                "-png",
+            ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except FileNotFoundError:
+            print(f"OCR dependency missing: 'pdftoppm' not found. Skipping OCR for {pdf_path}", file=sys.stderr)
+            return ""
+        except subprocess.CalledProcessError as e:
+            print(f"OCR pdftoppm failed on {pdf_path}: {e}", file=sys.stderr)
+            return ""
+        # run OCR on each image
+        for img in sorted(Path(tmpdir).glob("page-*.png")):
+            out_base = img.with_suffix("")
+            try:
+                subprocess.run(
+                    ["tesseract", str(img), str(out_base), "-l", lang],
+                    check=True,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+            except FileNotFoundError:
+                print(f"OCR dependency missing: 'tesseract' not found. Skipping OCR for {pdf_path}", file=sys.stderr)
+                return ""
+            except subprocess.CalledProcessError as e:
+                print(f"OCR tesseract failed on image {img}: {e}", file=sys.stderr)
+                continue
+            txt_file = out_base.with_suffix(".txt")
+            try:
+                text += txt_file.read_text() + "\n\n"
+            except Exception as e:
                 print(f"Failed to read OCR output {txt_file}: {e}", file=sys.stderr)
     return text
 
