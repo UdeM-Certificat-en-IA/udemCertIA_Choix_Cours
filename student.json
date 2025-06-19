@@ -1,0 +1,12 @@
+{
+  "student_name": "Jane Doe",
+  "courses_taken": [
+    "CS101",
+    "MATH200"
+  ],
+  "preferred_days": [
+    "Monday",
+    "Wednesday",
+    "Friday"
+  ]
+}

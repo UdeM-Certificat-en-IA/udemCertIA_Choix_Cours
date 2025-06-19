@@ -1,0 +1,19 @@
+{
+  "rules": [
+    {
+      "type": "mandatory",
+      "block": "Fundamentals",
+      "required": 5
+    },
+    {
+      "type": "elective",
+      "block": "Advanced Topics",
+      "choose": 2,
+      "from": [
+        "CS300",
+        "CS310",
+        "CS320"
+      ]
+    }
+  ]
+}
