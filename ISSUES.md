@@ -2,6 +2,8 @@
 
 ## Open
 
+None at the moment.
+
 ## Closed
 - [x] Verify environment dependencies for OCR on all platforms
 - [x] Documented usage of PDF conversion script

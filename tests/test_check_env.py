@@ -24,3 +24,21 @@ def test_missing_tesseract(capsys):
         captured = capsys.readouterr().out
     assert rc == 1
     assert 'tesseract: missing' in captured
+
+
+def test_missing_pdftoppm(capsys):
+    with mock.patch.object(check_env, 'check_python_package', return_value=True), \
+         mock.patch.object(check_env, 'check_executable', side_effect=lambda cmd: False if cmd == 'pdftoppm' else True):
+        rc = check_env.main()
+        captured = capsys.readouterr().out
+    assert rc == 1
+    assert 'pdftoppm: missing' in captured
+
+
+def test_missing_pdfminer(capsys):
+    with mock.patch.object(check_env, 'check_python_package', return_value=False), \
+         mock.patch.object(check_env, 'check_executable', return_value=True):
+        rc = check_env.main()
+        captured = capsys.readouterr().out
+    assert rc == 1
+    assert 'pdfminer.six: missing' in captured
