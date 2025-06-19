@@ -17,3 +17,4 @@
 - [x] Remove pytest output directory from repository
 - [x] Slugify filenames in converter and add test
 - [x] Implement course parser generating CSV and JSON
+- [x] Fix permission of parse_courses script
