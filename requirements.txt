@@ -1,3 +1,4 @@
 pdfminer.six
 reportlab
 pytest
+pulp
