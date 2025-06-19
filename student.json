@@ -1,12 +1,13 @@
 {
-  "student_name": "Jane Doe",
+  "student_name": "Daniel Gonzalez",
   "courses_taken": [
-    "CS101",
-    "MATH200"
+    "REI1850",
+    "SIA2020"
   ],
   "preferred_days": [
-    "Monday",
     "Wednesday",
-    "Friday"
+    "Thursday",
+    "Friday",
+    "Saturday"
   ]
 }
