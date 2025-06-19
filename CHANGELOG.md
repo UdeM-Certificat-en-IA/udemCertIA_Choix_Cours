@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 ### Added
+- Integration test for convert_folder script
+- Fixed leftover diff marker and restored OCR loop
 - Documented usage for pdf conversion script
 - Basic pytest test to verify repository setup
 - Initial CHANGELOG, ISSUES log, and TODO tracker
