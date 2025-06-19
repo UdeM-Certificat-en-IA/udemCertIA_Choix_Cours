@@ -1,9 +1,9 @@
 # TODO
 
 ## Environment & Dependencies
-- [ ] Create CONTRIBUTING.md with setup instructions (Python 3.x, virtualenv, `pip install -r requirements.txt`).
-- [ ] Document system dependencies: tesseract, poppler-utils; include install commands for Linux, macOS, and Windows.
-- [ ] Ensure PuLP installation is documented (`pip install pulp`).
+- [x] Create CONTRIBUTING.md with setup instructions (Python 3.x, virtualenv, `pip install -r requirements.txt`).
+- [x] Document system dependencies: tesseract, poppler-utils; include install commands for Linux, macOS, and Windows.
+- [x] Ensure PuLP installation is documented (`pip install pulp`).
 - [ ] Verify `pdfminer.six`, `reportlab`, and other Python packages install cleanly in CI environment.
 
 ## Features & Improvements
@@ -24,7 +24,8 @@
 ## Documentation
 - [ ] Update `README.md` with troubleshooting steps for missing `pip`/`pip3` and dependency failures.
 - [ ] Publish API reference documentation for `pdf_to_md.converter`, `parse_courses`, and `planner.optimizer`.
-- [ ] Document project structure, naming conventions, and sample workflows in CONTRIBUTING guide.
+- [x] Document project structure, naming conventions, and sample workflows in CONTRIBUTING guide.
+- [ ] Provide detailed example schedule output in README.
 
 ## Maintenance
 - [ ] Maintain `scripts/check_env.py` as new dependencies are introduced or evolve.

@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- CONTRIBUTING guide with environment setup, tool installation and basic workflow
 - Integration test for convert_folder script
 - Fixed leftover diff marker and restored OCR loop
 - Documented usage for pdf conversion script

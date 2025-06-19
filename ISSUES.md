@@ -1,8 +1,7 @@
 # Issues Log
 
 ## Open
-- Document Python & system dependency setup (pip, tesseract, poppler-utils, pulp, reportlab).
-- Create CONTRIBUTING.md with development workflow and environment setup.
+- Provide detailed example schedule output in README.
 - Configure CI pipeline for linting, testing, and coverage (e.g., GitHub Actions).
 - Enhance PDF-to-Markdown parsing for complex layouts and real UdeM Markdown formats.
 - Extend planner optimizer for prerequisites, term credit limits, and additional rule types.
@@ -16,6 +15,8 @@
 - [x] Added initial test and basic repo maintenance files
 - [x] Add OCR support for scanned PDFs
 - [x] Add CLI option for language selection in OCR
+- [x] Document Python & system dependency setup (pip, tesseract, poppler-utils, pulp, reportlab).
+- [x] Create CONTRIBUTING.md with development workflow and environment setup.
 
 - [x] Added README and doc directory with TODO placeholder
 - [x] Set up automated PDF to markdown conversion
