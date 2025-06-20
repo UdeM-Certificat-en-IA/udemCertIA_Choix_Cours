@@ -8,7 +8,7 @@ Tasks are grouped by domain and ordered roughly by dependency.
 
 | ID | Priority | Task | Owner | Status |
 |----|----------|------|-------|--------|
-| P1 | 🔴 High | **Markdown→JSON parser** – extract course/section data from the OCR’d `.md` files into the schema in `doc/OPTIMIZATION_GUIDE.md`. | @data-eng | ❌ open |
+| P1 | 🔴 High | **Markdown→JSON parser** – extract course/section data from the OCR’d `.md` files into the schema in `doc/OPTIMIZATION_GUIDE.md`. | @data-eng | ✅ done |
 | P2 | 🔴 High | **Integration test**: PDF sample → `.md` → parser → JSON; assert schema & sample values. | @qa | ❌ open |
 | P3 | 🔴 High | **Add Tesseract to CI container** so OCR actually runs and `.md` outputs are populated. | @devops | ❌ open |
 | S1 | 🟠 Med  | Extend `course_scheduler` with **preference-aware scoring & local search** as outlined in the guide. | @algo | ⏳ WIP |
