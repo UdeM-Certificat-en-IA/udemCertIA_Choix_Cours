@@ -74,7 +74,7 @@ python scripts/convert_folder.py <input_folder> <output_root> --lang eng --silen
 
 The command replicates the directory structure of `input_folder` inside
 `output_root` and writes Markdown files without printing their contents.
-### Batch conversion of PDFs in `.pdf` directories
+# Batch conversion of PDFs in `.pdf` directories
 To automatically convert all PDF files located within any `.pdf` folder in your project,
 use the `scripts/batch_pdf_to_md.py` script. It searches recursively under the specified
 root directory (current directory by default) for directories named `.pdf` and outputs
@@ -84,25 +84,20 @@ corresponding Markdown files into sibling `.md` folders.
 python scripts/batch_pdf_to_md.py --root <project_root> --lang eng --silent
 ```
 
-## Building a conflict-free schedule
+## Building a conflict-free schedule (temporary workflow)
 
-Once you have your course data in **JSON** form (the forthcoming parser will
-produce the same structure that you can already see hard-coded in
-`index.html`’s *fullData* variable), you can compute a valid timetable:
+Until the Markdown→JSON parser (see `TODO.md` task **P1**) is implemented,
+you can still evaluate the solver by providing a handcrafted JSON input (the
+expected schema is shown in the header comment of `scripts/solve_schedule.py`).
 
 ```bash
 python scripts/solve_schedule.py my_courses.json
 ```
 
-If a solution exists the script prints the chosen sections, one per line. It
-uses a lightweight depth-first search and has **no external solver
-dependencies**. For small/medium course loads (< 50 courses) it finds a
-solution in milliseconds.
+If a solution exists the script prints the chosen sections, one per line.  For
+small/medium course loads (< 50 courses) it finishes in a few milliseconds.
 
-If no solution exists the exit status is `1` and an explanatory message is sent
-to *stderr*.
-
-> 🎯 **Roadmap** — A Markdown → JSON parser as well as additional constraints
-> (credit limits, on-campus vs. online preferences, etc.) will be rolled out in
-> successive iterations.
+The solver currently enforces time-conflict and duplication constraints.  A
+weighted preference optimiser and credit limits are planned – see tasks **S1
+– S3** in `TODO.md`.
 
