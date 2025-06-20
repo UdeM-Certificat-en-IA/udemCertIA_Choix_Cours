@@ -84,11 +84,23 @@ corresponding Markdown files into sibling `.md` folders.
 python scripts/batch_pdf_to_md.py --root <project_root> --lang eng --silent
 ```
 
+## Parsing Markdown to JSON
+
+Once your `.md` files are generated you can convert them to structured JSON
+using the new parser module:
+
+```bash
+python -c "from md_parser import parse_semester; parse_semester(Path('Courses/winter2026/.md').parent)"
+```
+
+This command writes `data/winter2026.json` containing the schema described in
+`doc/OPTIMIZATION_GUIDE.md`.
+
 ## Building a conflict-free schedule (temporary workflow)
 
-Until the Markdown→JSON parser (see `TODO.md` task **P1**) is implemented,
-you can still evaluate the solver by providing a handcrafted JSON input (the
-expected schema is shown in the header comment of `scripts/solve_schedule.py`).
+With the Markdown parser in place you can convert a semester’s courses to JSON
+and feed it directly to the solver.  If you prefer, you may still craft the
+JSON manually following the schema shown in `scripts/solve_schedule.py`.
 
 ```bash
 python scripts/solve_schedule.py my_courses.json

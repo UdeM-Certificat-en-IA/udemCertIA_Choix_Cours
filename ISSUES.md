@@ -13,3 +13,4 @@
 - [x] Set up automated PDF to markdown conversion
 - [x] Added script for batch PDF conversion by folder
 - [x] Validate Markdown output not empty via CLI test
+- [x] Implement Markdown→JSON parser

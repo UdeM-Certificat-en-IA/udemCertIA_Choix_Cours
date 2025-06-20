@@ -11,3 +11,5 @@
 - OCR fallback with tesseract/pdftoppm and --lang CLI option
 - Moved legacy pdfminer-only script to `scripts/legacy`
 - Test ensures Markdown output is non-empty and ASCII
+- Added Markdown parser converting `.md` timetables to JSON
+- New tests for parser and JSON export
