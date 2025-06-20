@@ -1,9 +1,10 @@
 # Issues Log
 
 ## Open
-- [ ] Verify environment dependencies for OCR on all platforms
 
 ## Closed
+- [x] Added CI workflow building Docker image and running tests
+- [x] Verify environment dependencies for OCR on all platforms
 - [x] Documented usage of PDF conversion script
 - [x] Added initial test and basic repo maintenance files
 - [x] Add OCR support for scanned PDFs

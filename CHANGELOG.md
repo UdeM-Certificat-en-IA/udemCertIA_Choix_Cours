@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- CI workflow builds Docker image and runs tests
 - Documented usage for pdf conversion script
 - Basic pytest test to verify repository setup
 - Initial CHANGELOG, ISSUES log, and TODO tracker

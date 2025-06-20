@@ -10,7 +10,7 @@ Tasks are grouped by domain and ordered roughly by dependency.
 |----|----------|------|-------|--------|
 | P1 | 🔴 High | **Markdown→JSON parser** – extract course/section data from the OCR’d `.md` files into the schema in `doc/OPTIMIZATION_GUIDE.md`. | @data-eng | ✅ done |
 | P2 | 🔴 High | **Integration test**: PDF sample → `.md` → parser → JSON; assert schema & sample values. | @qa | ✅ done |
-| P3 | 🔴 High | **Add Tesseract to CI container** so OCR actually runs and `.md` outputs are populated. | @devops | ❌ open |
+| P3 | 🔴 High | **Add Tesseract to CI container** so OCR actually runs and `.md` outputs are populated. | @devops | ✅ done |
 | S1 | 🟠 Med  | Extend `course_scheduler` with **preference-aware scoring & local search** as outlined in the guide. | @algo | ⏳ WIP |
 | S2 | 🟠 Med  | CLI wrapper `scripts/solve_schedule.py` – support multi-semester input, credit min/max flags, weight string. | @algo | ⏳ WIP |
 | S3 | 🟠 Med  | Write **unit tests for weight scoring** and local-search optimiser. | @qa | ❌ open |
