@@ -83,3 +83,26 @@ corresponding Markdown files into sibling `.md` folders.
 ```bash
 python scripts/batch_pdf_to_md.py --root <project_root> --lang eng --silent
 ```
+
+## Building a conflict-free schedule
+
+Once you have your course data in **JSON** form (the forthcoming parser will
+produce the same structure that you can already see hard-coded in
+`index.html`’s *fullData* variable), you can compute a valid timetable:
+
+```bash
+python scripts/solve_schedule.py my_courses.json
+```
+
+If a solution exists the script prints the chosen sections, one per line. It
+uses a lightweight depth-first search and has **no external solver
+dependencies**. For small/medium course loads (< 50 courses) it finds a
+solution in milliseconds.
+
+If no solution exists the exit status is `1` and an explanatory message is sent
+to *stderr*.
+
+> 🎯 **Roadmap** — A Markdown → JSON parser as well as additional constraints
+> (credit limits, on-campus vs. online preferences, etc.) will be rolled out in
+> successive iterations.
+
