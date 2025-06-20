@@ -14,3 +14,4 @@
 - [x] Added script for batch PDF conversion by folder
 - [x] Validate Markdown output not empty via CLI test
 - [x] Implement Markdown→JSON parser
+- [x] Add integration test for PDF→MD→JSON pipeline
