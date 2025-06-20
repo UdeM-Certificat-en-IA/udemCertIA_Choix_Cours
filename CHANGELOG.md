@@ -13,3 +13,4 @@
 - Test ensures Markdown output is non-empty and ASCII
 - Added Markdown parser converting `.md` timetables to JSON
 - New tests for parser and JSON export
+- Added sample PDF and integration test for PDF→MD→JSON pipeline
