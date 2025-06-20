@@ -16,3 +16,4 @@
 - [x] Validate Markdown output not empty via CLI test
 - [x] Implement Markdown→JSON parser
 - [x] Add integration test for PDF→MD→JSON pipeline
+- [x] Implement local search optimiser with preference scoring constants
