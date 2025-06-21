@@ -17,3 +17,4 @@
 - [x] Implement Markdown→JSON parser
 - [x] Add integration test for PDF→MD→JSON pipeline
 - [x] Implement local search optimiser with preference scoring constants
+- [x] Extend solver CLI with multi-file input and credit limits
