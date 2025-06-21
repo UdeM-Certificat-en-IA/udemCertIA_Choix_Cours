@@ -14,10 +14,62 @@ project light-weight.
 
 from __future__ import annotations
 
-import itertools
 from typing import Dict, List, Optional, Tuple
 
 from .models import Course, Section
+
+# ---------------------------------------------------------------------------
+# Preference weight constants (see doc/OPTIMIZATION_GUIDE.md)
+# ---------------------------------------------------------------------------
+
+WEIGHT_WED = 10
+WEIGHT_THU = 7
+WEIGHT_FRI = 5
+
+PENALTY_MON = -6
+PENALTY_TUE = -6
+
+WEIGHT_LOCATION = 2  # penalty per additional campus location
+WEIGHT_EARLY_PREREQ = 1
+
+DEFAULT_WEIGHTS = {
+    "wed": WEIGHT_WED,
+    "thu": WEIGHT_THU,
+    "fri": WEIGHT_FRI,
+    "mon": PENALTY_MON,
+    "tue": PENALTY_TUE,
+    "location": WEIGHT_LOCATION,
+    "prereq": WEIGHT_EARLY_PREREQ,
+}
+
+
+def score_sections(sections: List[Section], weights: Optional[Dict[str, float]] = None) -> float:
+    """Return the preference score for a list of selected ``Section`` objects."""
+
+    w = DEFAULT_WEIGHTS.copy()
+    if weights:
+        w.update(weights)
+
+    score = 0.0
+    for sec in sections:
+        if sec.day == "Mer":
+            score += w["wed"]
+        elif sec.day == "Jeu":
+            score += w["thu"]
+        elif sec.day == "V":
+            score += w["fri"]
+        elif sec.day == "Lun":
+            score += w["mon"]
+        elif sec.day == "Ma":
+            score += w["tue"]
+
+    # penalise multiple physical locations (ignoring online)
+    locations = {s.location for s in sections if s.location}
+    if len(locations) > 1:
+        score -= (len(locations) - 1) * w["location"]
+
+    return score
+
 
 
 def _has_conflict(selected: List[Section], candidate: Section) -> bool:
@@ -43,16 +95,54 @@ def _search(courses: List[Course], idx: int, partial: List[Section]) -> Optional
     return None  # no feasible assignment from this branch
 
 
-def solve_schedule(courses: List[Course]) -> Tuple[bool, List[Section]]:
-    """Return *(success, sections)* where *sections* is a valid non-conflicting
-    list when *success* is ``True``.
-    """
+def _local_search(courses: List[Course], sections: List[Section], weights: Dict[str, float]) -> List[Section]:
+    """Improve *sections* via greedy swaps until no improvement."""
+
+    improved = True
+    best_sections = sections
+    best_score = score_sections(sections, weights)
+
+    while improved:
+        improved = False
+        for idx, course in enumerate(courses):
+            current = best_sections[idx]
+            for alt in course.sections:
+                if alt is current:
+                    continue
+                others = best_sections[:idx] + best_sections[idx + 1 :]
+                if _has_conflict(others, alt):
+                    continue
+                cand_sections = best_sections.copy()
+                cand_sections[idx] = alt
+                cand_score = score_sections(cand_sections, weights)
+                if cand_score > best_score:
+                    best_sections = cand_sections
+                    best_score = cand_score
+                    improved = True
+                    break
+            if improved:
+                break
+    return best_sections
+
+
+def solve_schedule(
+    courses: List[Course], weights: Optional[Dict[str, float]] = None
+) -> Tuple[bool, List[Section]]:
+    """Return ``(success, sections)`` for a preference-optimised schedule."""
 
     if not courses:
         return True, []
 
     result = _search(courses, 0, [])
-    return (result is not None, result or [])
+    if result is None:
+        return False, []
+
+    w = DEFAULT_WEIGHTS.copy()
+    if weights:
+        w.update(weights)
+
+    optimised = _local_search(courses, result, w)
+    return True, optimised
 
 
 # ---------------------------------------------------------------------------

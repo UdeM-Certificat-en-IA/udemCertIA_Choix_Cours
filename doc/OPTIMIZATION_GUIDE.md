@@ -82,14 +82,15 @@ hundreds of courses.
 
 ## 5  Optimization algorithm (current)
 
-1. **Feasibility search** per semester using DFS (no weights yet).
+1. **Feasibility search** per semester using DFS.
 2. **Local improvement loop**:
-   * For every selected course, try alternative sections.
-   * Compute net preference delta; adopt change if score ↑ and constraints stay satisfied.
-   * Iterate until no improvement for two full passes.
+   * For each chosen section try the other sections of the same course.
+   * Compute the new preference score using the weights above.
+   * Adopt the alternative when the score increases and no hard constraint is violated.
+   * Repeat until a full pass yields no improvement.
 
-The score function uses preference weights from §3, so Wed/Thu/Fri moves are
-preferred and duplicate courses across semesters are automatically avoided.
+The scoring constants are implemented in ``course_scheduler.solver`` and can be
+overridden via the ``weights`` parameter of :func:`solve_schedule`.
 
 ---
 
