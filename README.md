@@ -98,18 +98,17 @@ This command writes `data/winter2026.json` containing the schema described in
 
 ## Building a conflict-free schedule (temporary workflow)
 
-With the Markdown parser in place you can convert a semester’s courses to JSON
-and feed it directly to the solver.  If you prefer, you may still craft the
-JSON manually following the schema shown in `scripts/solve_schedule.py`.
+With the Markdown parser in place you can convert each semester’s courses to
+JSON and feed them directly to the solver.  The CLI now accepts multiple JSON
+files and credit limits:
 
 ```bash
-python scripts/solve_schedule.py my_courses.json
+python scripts/solve_schedule.py winter2026.json summer2026.json \
+    --min-credits 6 --max-credits 9 --weights wed=12,fri=8
 ```
 
 If a solution exists the script prints the chosen sections, one per line.  For
 small/medium course loads (< 50 courses) it finishes in a few milliseconds.
 
-The solver currently enforces time-conflict and duplication constraints.  A
-weighted preference optimiser and credit limits are planned – see tasks **S1
-– S3** in `TODO.md`.
+The solver currently enforces time-conflict and duplication constraints.
 
