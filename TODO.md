@@ -13,7 +13,7 @@ Tasks are grouped by domain and ordered roughly by dependency.
 | P3 | 🔴 High | **Add Tesseract to CI container** so OCR actually runs and `.md` outputs are populated. | @devops | ✅ done |
 | S1 | 🟠 Med  | Extend `course_scheduler` with **preference-aware scoring & local search** as outlined in the guide. | @algo | ✅ done |
 | S2 | 🟠 Med  | CLI wrapper `scripts/solve_schedule.py` – support multi-semester input, credit min/max flags, weight string. | @algo | ✅ done |
-| S3 | 🟠 Med  | Write **unit tests for weight scoring** and local-search optimiser. | @qa | ✅ done |
+| S3 | 🟠 Med  | Write **unit tests for weight scoring** and local-search optimiser (all preference rules). | @qa | ✅ done |
 | UI1| 🟡 Low  | Build small REST endpoint (FastAPI) to serve generated schedules to the Tailwind UI. | @web | ❌ open |
 | UI2| 🟡 Low  | Modify `index.html` to fetch JSON from API instead of hard-coded `fullData`. | @web | ❌ open |
 | D1 | 🔵 Info | Review `doc/OPTIMIZATION_GUIDE.md` every sprint; keep protocol in sync with code. | @docs | 🆗 ongoing |
