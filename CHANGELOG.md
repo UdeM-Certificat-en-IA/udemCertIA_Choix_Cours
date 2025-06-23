@@ -18,3 +18,4 @@
 - Preference scoring constants and configurable local-search optimiser
 - Unit tests for scoring and optimiser behaviour
 - CLI solver accepts multiple JSON files, credit bounds and weight overrides
+- Extended scoring tests to cover preference ordering and location penalties
